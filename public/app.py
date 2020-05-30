@@ -13,3 +13,12 @@ def home():
 @app.route("/developer")
 def dev():
     return render_template("developer.html")
+
+@app.route("/live")
+def live():
+    return render_template("live.html")
+
+
+@app.errorhandler(404) 
+def not_found(e): 
+    return render_template("404.html") 
