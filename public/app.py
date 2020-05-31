@@ -110,7 +110,7 @@ dhpp.layout=html.Div([
 
             dcc.Graph(id='box3')
         ], className='col-md-12')
-    ],className='row')
+    ],className='row'), html.H4{[html.A("Back to home", href ="/")]}
 ],className='container')
 
 @dhpp.callback(Output('heatmap','figure'),[Input('picker1','value')])
