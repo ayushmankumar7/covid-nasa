@@ -30,7 +30,7 @@ def dev():
 @app.route("/live")
 def live():
     a = country.country()
-    d = {'windspeed': 0, 'humidity': 0, 'temp':0, 'class': 1}
+    d = {'windspeed': 0, 'humidity': 0, 'temp':0, 'class': 0}
     return render_template("live.html", a = a, d= d)
 
 @app.route('/live1', methods = ["POST", "GET"])
