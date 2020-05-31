@@ -4,14 +4,15 @@ import pickle
 import os
 import json 
 import requests
-
+import numpy as np
 
 from public.variables import country, apik
 
 
 app = Flask(__name__)
 api = Api(app)
-
+model = pickle.load(open('public/model/model.pkl', 'rb'))
+print(model)
 
 
 
@@ -30,7 +31,7 @@ def dev():
 @app.route("/live")
 def live():
     a = country.country()
-    d = {'windspeed': 0, 'humidity': 0, 'temp':0, 'class': 0}
+    d = {'windspeed': 0, 'humidity': 0, 'temp':0, 'class': 0, 'prediction':0}
     return render_template("live.html", a = a, d= d)
 
 @app.route('/live1', methods = ["GET", "POST"])
@@ -74,9 +75,11 @@ class WeatherPred(Resource):
         windspeed = y['wind_speed']
         humidity = y['humidity']
         temp = y['temperature']
-        
+        prediction = model.predict(np.array([[humidity, temp, windspeed]]))
+        output = round(prediction[0], 2)
+        print(output)        
 
-        d= {"windspeed": windspeed, "humidity": humidity, "temp":temp, "class": 1}
+        d= {"windspeed": windspeed, "humidity": humidity, "temp":temp, "class": 1, 'prediction': int(output)}
 
 
         return d
