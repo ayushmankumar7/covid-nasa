@@ -2,8 +2,11 @@ from flask import Flask, render_template, send_from_directory
 from flask_restful import Api, Resource, reqparse, abort
 import pickle
 import os
+import json 
+import requests
 
-from public.variables import country
+
+from public.variables import country, apik
 
 
 app = Flask(__name__)
@@ -42,7 +45,19 @@ def not_found(e):
 
 class WeatherPred(Resource):
 
-    def get(self, num):
-        return {"Api": "Is Working", "number" : num}
+    def get(self, con):
+        key = apik.getkey()
+        url = "http://api.weatherstack.com/current?access_key="+key+"&query="+con
+        r = requests.get(url)
 
-api.add_resource(WeatherPred, "/api/<int:num>")
+        y = json.loads(r.text)['current']
+        windspeed = y['wind_speed']
+        humidity = y['humidity']
+        temp = y['temperature']
+
+        d= {"windspeed": windspeed, "humidity": humidity, "temp":temp}
+
+
+        return d
+
+api.add_resource(WeatherPred, "/api/<con>")

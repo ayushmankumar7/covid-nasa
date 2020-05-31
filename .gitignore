@@ -107,3 +107,5 @@ public/__pycache__/
 
 nasa/
 __pycache__/
+
+public/variables/apik.py
