@@ -20,14 +20,30 @@
   </div>
   <h3 class="text-grey-dark text-sm font-bold font-sans leading-normal">Check our live Climate Corona Predictor!</h3>
   <p class="my-3 text-grey font-light tracking-wide font-sans leading-normal text-sm">The following predictor takes in consideration the humidity, temperature, wind speed and other weather parameter and predicts in which zone a particular country falls. </p>
-  
-  <input class="appearance-none bg-transparent border-none w-full text-white mr-3 py-1 px-2 leading-tight focus:outline-none" list = "countries" type="text" placeholder="Enter Country" aria-label="Full name">
+  <form action="{{ url_for('live1') }}">
+  <input class="appearance-none bg-transparent border-none w-full text-white mr-3 py-1 px-2 leading-tight focus:outline-none" list = "countries" type="text" placeholder="Enter Country" aria-label="Full name" name = "con" method = "post">
       <datalist id="countries">
         {% for country in a %}
         <option value={{ country }}></option>
         {% endfor %}
     </datalist>   
   <button class="bg-purple text-white px-3 py-2 rounded w-full mt-4 border-teal-500 hover:bg-teal-700 bg-teal-500">Get Prediction!</button>
+
+  </form>
+
+  <form action="{{ url_for('live') }}">
+    <button class="bg-purple text-white px-3 py-2 rounded w-full mt-4 border-teal-500 hover:bg-teal-700 bg-teal-500">Refresh</button>
+  </form>
+  <br> 
+  <p></p>
+  <p class="text-white">Humidity : {{ d['humidity'] }}  </p>
+  <p class="text-white">Wind Speed : {{ d['windspeed'] }}</p>
+  <p class="text-white">Temperature : {{ d['temp'] }}</p>
+
+  <p class="text-white">Prediction : {{ d['class'] }}</p>
+  
+  
+
 </div>
 
 

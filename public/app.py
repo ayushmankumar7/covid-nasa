@@ -1,4 +1,4 @@
-from flask import Flask, render_template, send_from_directory
+from flask import Flask, render_template, send_from_directory, request, redirect, url_for
 from flask_restful import Api, Resource, reqparse, abort
 import pickle
 import os
@@ -30,7 +30,27 @@ def dev():
 @app.route("/live")
 def live():
     a = country.country()
-    return render_template("live.html", a = a)
+    d = {'windspeed': 0, 'humidity': 0, 'temp':0, 'class': 1}
+    return render_template("live.html", a = a, d= d)
+
+@app.route('/live1', methods = ["POST", "GET"])
+def live1():
+    a = country.country()
+    coun  = request.form.get("con")
+    print(coun)
+    if coun is not None:
+        name = coun
+    else:
+        name = "india"
+
+    print(name)
+    url = "https://bppcov19.herokuapp.com/api/"+name
+    d = json.loads(requests.get(url).text)
+    return render_template("live.html", a = a, d = d)
+
+
+def redir():
+    return redirect(url_for('live'))
 
 @app.route('/stats')
 def stats():
@@ -54,8 +74,9 @@ class WeatherPred(Resource):
         windspeed = y['wind_speed']
         humidity = y['humidity']
         temp = y['temperature']
+        
 
-        d= {"windspeed": windspeed, "humidity": humidity, "temp":temp}
+        d= {"windspeed": windspeed, "humidity": humidity, "temp":temp, "class": 1}
 
 
         return d
