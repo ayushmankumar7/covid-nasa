@@ -1,6 +1,13 @@
 from flask import Flask, render_template, send_from_directory
+from flask_restful import Api, Resource, reqparse, abort
+import pickle
+import os
 
 app = Flask(__name__)
+api = Api(app)
+
+
+
 
 @app.route('/favicon.ico')
 def favicon():
@@ -26,3 +33,12 @@ def stats():
 @app.errorhandler(404) 
 def not_found(e): 
     return render_template("404.html") 
+
+
+
+class WeatherPred(Resource):
+
+    def get(self, num):
+        return {"Api": "Is Working", "number" : num}
+
+api.add_resource(WeatherPred, "/api/<int:num>")
