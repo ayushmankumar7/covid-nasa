@@ -33,7 +33,7 @@ def live():
     d = {'windspeed': 0, 'humidity': 0, 'temp':0, 'class': 0}
     return render_template("live.html", a = a, d= d)
 
-@app.route('/live1', methods = ["POST", "GET"])
+@app.route('/live1', methods = ["GET", "POST"])
 def live1():
     a = country.country()
     coun  = request.form.get("con")
