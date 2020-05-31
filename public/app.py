@@ -18,6 +18,10 @@ def dev():
 def live():
     return render_template("live.html")
 
+@app.route('/stats')
+def stats():
+    return render_template("statistics.html")
+
 
 @app.errorhandler(404) 
 def not_found(e): 
