@@ -3,6 +3,9 @@ from flask_restful import Api, Resource, reqparse, abort
 import pickle
 import os
 
+from public.variables import country
+
+
 app = Flask(__name__)
 api = Api(app)
 
@@ -23,7 +26,8 @@ def dev():
 
 @app.route("/live")
 def live():
-    return render_template("live.html")
+    a = country.country()
+    return render_template("live.html", a = a)
 
 @app.route('/stats')
 def stats():
